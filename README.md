@@ -1,5 +1,6 @@
 # Container-Status-Discord-Bot
 This discord bot will post the status's of your docker containers every 60s showing what is or isnt running. My use case for this is for check Plex services for my friends however can be repurposed as needed. You would want to configure a cron job to kick off this script for you. There are a few attributes you will want to edit inside of the python file so that it works to your benefit. 
+![docker running](https://github.com/zanthium/Container-Status-Discord-Bot/assets/57977418/d2f5f65e-9b2a-4c1d-8cd4-1ab8237ed264)
 
 # Configuration
 There are 3 different fields you will need to fill out in-order to allow this script to access your discord server and the channel you want to post in.

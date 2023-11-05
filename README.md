@@ -8,11 +8,11 @@ Right click your server on the left and select "Copy Server ID". There are 2 pla
 
 Channel_ID = "ID_VALUE"
 This can be easily missed if you arent looking out for it. You will see the following string below. The "id" section is where you put your channel ID. Once you are in your discord server right click the channel you want the bot to post in and select "Copy Channel ID".
-<br> channel = discord.utils.get(server.channels, id=CHANNEL_ID) <br>
+<br> channel = discord.utils.get(server.channels, id=CHANNEL_ID)
 
 Discord_Bot_Token
 This will be at the very end of the python script. When you create your new application (bot) in the discord developer portal. You can generate a token for that bot. You will need to put that token in the value below.
-client.run('DISCORD_BOT_TOKEN')
+<br> client.run('DISCORD_BOT_TOKEN')
 
 # Permissions
 You will need to ensure these 3 settings are configured.

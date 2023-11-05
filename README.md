@@ -24,5 +24,5 @@ When you invite your discord bot to your server you will need to make sure that 
 # Troubleshooting
 If you get a 403 Forbidden message this can come up if the channel the bot is trying to post into is locked to a specific role. To fix this assign the allowed role to the bot in the server.
 
-Credit:
+# Credit
 This discord bot was inspired by gdamx's Unraid-Docker-Container-Bot-Discord. Made a quite a few tweaks of my own and was left pretty happy with the end result.

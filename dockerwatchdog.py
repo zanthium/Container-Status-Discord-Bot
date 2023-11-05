@@ -26,7 +26,7 @@ async def myLoop():
 
     containers = docker_client.containers.list(all=True)
     x = datetime.datetime.now()
-    embedVar = discord.Embed(title="Plex Server Status", description="Made by Ben", color=0x00ff00)
+    embedVar = discord.Embed(title="Plex Server Status", description="Made by Super Awesome Name of the guy using this", color=0x00ff00)
 
     embedVar.add_field(name="Last Heartbeat", value=f"{x}", inline=False)
 

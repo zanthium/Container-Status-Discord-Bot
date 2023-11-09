@@ -1,0 +1,13 @@
+version: '3'
+services:
+  watchdog:
+    image: plex_watchdog
+    container_name: container_watchdog
+    restart: unless-stopped
+    environment:
+      - SERVER_ID=${SERVER_ID}
+      - CHANNEL_ID=${CHANNEL_ID}
+      - BOT_TOKEN=${BOT_TOKEN}
+    volumes:
+      - ./config.yml:/etc/dockerwatchdog/config.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock

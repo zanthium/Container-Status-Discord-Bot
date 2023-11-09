@@ -1,0 +1,7 @@
+docker:
+  containers:
+    - plex
+    - sonarr
+    - radarr
+    - deluge
+    - prowlarr

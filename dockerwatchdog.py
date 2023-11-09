@@ -2,13 +2,15 @@ import discord
 import datetime
 import asyncio
 import docker
+import os
+import yaml
 from discord.ext import tasks
 
 intents = discord.Intents.all()
 intents.message_content = True
 client = discord.Client(intents=intents)
-Server_ID = SERVER_ID
-
+Server_ID = os.environ["SERVER_ID"]
+Channel_ID = os.environ["CHANNEL_ID"]
 docker_client = docker.from_env()
 
 # Define a variable to store the previous message ID
@@ -19,10 +21,8 @@ async def myLoop():
     global previous_message_id
 
     await client.change_presence(activity=discord.Game(name="Checking Containers"))
-
-    Server_ID = SERVER_ID
-    server = client.get_guild(Server_ID)
-    channel = discord.utils.get(server.channels, id=CHANNEL_ID)
+    server = client.get_guild(int(Server_ID))
+    channel = discord.utils.get(server.channels, id=int(Channel_ID))
 
     containers = docker_client.containers.list(all=True)
     x = datetime.datetime.now()
@@ -31,21 +31,16 @@ async def myLoop():
     embedVar.add_field(name="Last Heartbeat", value=f"{x}", inline=False)
 
     # Define a list of container names you want to monitor
-    containers_to_monitor = ["sonarr", "radarr", "prowlarr", "plex", "deluge"]
-    container_mapping = {
-        "sonarr": "Sonarr",
-        "deluge": "Deluge",
-        "prowlarr": "Prowlarr",
-        "plex": "Plex",
-        "radarr": "Radarr",
-    }
+    with open('/etc/dockerwatchdog/config.yml','r') as file:
+        driver = yaml.safe_load(file)
+        containers_to_monitor = driver['docker']['containers']
 
     for container in docker_client.containers.list(all=True):
         container_name = container.name
 
         # Check if the container is in the list of containers to monitor
         if container_name in containers_to_monitor:
-            human_readable_name = container_mapping.get(container_name, container_name)
+            human_readable_name = container_name.capitalize()
 
             if container.status == "running":
                 created_time_str = container.attrs['Created']
@@ -63,7 +58,8 @@ async def myLoop():
 
     # Check if any expected containers were not found
     for expected_name in containers_to_monitor:
-        human_readable_name = container_mapping.get(expected_name, expected_name)
+        #human_readable_name = container_mapping.get(expected_name, expected_name)
+        human_readable_name = container_name.capitalize()
         if not any(container.name == expected_name for container in docker_client.containers.list(all=True)):
             embedVar.add_field(name=human_readable_name, value="Not Found 🔴", inline=False)
 
@@ -90,5 +86,4 @@ async def on_ready():
     print('Bot is now running and will perform an action every 60 seconds.')
     myLoop.start()
 
-client.run('DISCORD_BOT_TOKEN')
-
+client.run(os.environ["BOT_TOKEN"])
